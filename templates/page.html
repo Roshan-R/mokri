@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/htmx.org@1.9.12"
+        integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Mokri</title>
+</head>
+
+<body>
+    <div class="m-3 flex h-screen w-full">
+        <div class="h-full flex">
+            <div class="flex flex-col bg-slate-100">
+                <div class="mb-6 p-4 text-2xl font-semibold">Requests</div>
+                <div class="mx-4 flex flex-col gap-6 text-sm">
+                    {{range .Routes}}
+                    <button hx-get="/getFromPath" hx-target="#details" name={{ (printf "%s:%s" .Path .Method) }}
+                        class="rounded-lg bg-pink-200 p-2 font-mono">{{.Path}}</button>
+                    {{end}}
+                    <button hx-get="/getFromPath" hx-target="#details" name="special@reset"
+                        class="mb-3 rounded-lg bg-white p-2 font-mono outline-dotted">+ add new</button>
+                </div>
+            </div>
+        </div>
+        <form hx-post="/updateItem" hx-target="body" class="p2 flex grow flex-col gap-5 bg-green-100 p-4" id="details">
+            <div class="flex gap-6">
+                <input type="text" id="path" name="path" placeholder="path" class="p-2 rounded-md" />
+                <input type="number" id="status" name="status" placeholder="status" min="100" max="599"
+                    class="p-2 rounded-md w-32" />
+                <select name="method" id="method" class="p-2">
+                    <option value="" selected disabled hidden>Method</option>
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                </select>
+                <button type="submit" class="p-2 rounded-md bg-green-200" name="action" value="submit">Submit</button>
+                <button type="submit" class="p-2 rounded-md bg-red-200" name="action" value="delete">Delete</button>
+            </div>
+            <textarea name="body" id="body" placeholder="Body" class="p-2"></textarea>
+        </form>
+    </div>
+</body>
+
+</html>
