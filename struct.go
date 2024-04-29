@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 
@@ -23,10 +22,13 @@ type Config struct {
 	Routes map[string]Item
 }
 
+const configFileName = "config.yaml"
+const configDirName = "gomock"
+
 func GetConfigPath() string {
-	configDir, err := os.UserConfigDir()
+	homeDir, err := os.UserConfigDir()
 	Check(err)
-	configPath := filepath.Join(configDir, "gomock", "config.yaml")
+	configPath := filepath.Join(homeDir, configDirName, configFileName)
 	return configPath
 }
 
@@ -36,7 +38,6 @@ func ReadConfig() (Config, error) {
 	f, err := os.ReadFile(cfp)
 	yaml.Unmarshal(f, &config)
 	Check(err)
-	fmt.Println(config)
 
 	if config.Routes == nil {
 		config.Routes = make(map[string]Item)
@@ -47,12 +48,12 @@ func ReadConfig() (Config, error) {
 
 func WriteConfig(newConfig *Config) error {
 	cfp := GetConfigPath()
-	y, err := yaml.Marshal(&newConfig)
+	b, err := yaml.Marshal(&newConfig)
 	Check(err)
 
 	f, err := os.OpenFile(cfp, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
 	defer f.Close()
-	f.WriteString(string(y))
+	f.Write(b)
 
 	return nil
 
