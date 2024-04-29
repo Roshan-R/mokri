@@ -29,10 +29,10 @@
         </div>
         <form hx-post="/updateItem" hx-target="body" class="p2 flex grow flex-col gap-5 bg-green-100 p-4" id="details">
             <div class="flex gap-6">
-                <input type="text" id="path" name="path" placeholder="path" class="p-2 rounded-md" />
+                <input type="text" id="path" name="path" placeholder="path" class="p-2 rounded-md" required />
                 <input type="number" id="status" name="status" placeholder="status" min="100" max="599"
-                    class="p-2 rounded-md w-32" />
-                <select name="method" id="method" class="p-2">
+                    class="p-2 rounded-md w-32" required />
+                <select name="method" id="method" class="p-2" required>
                     <option value="" selected disabled hidden>Method</option>
                     <option value="GET">GET</option>
                     <option value="POST">POST</option>
@@ -41,7 +41,7 @@
                 <button type="submit" class="p-2 rounded-md bg-green-200" name="action" value="submit">Submit</button>
                 <button type="submit" class="p-2 rounded-md bg-red-200" name="action" value="delete">Delete</button>
             </div>
-            <textarea name="body" id="body" placeholder="Body" class="p-2"></textarea>
+            <textarea name="body" id="body" placeholder="Body" class="p-2" required></textarea>
         </form>
     </div>
 </body>

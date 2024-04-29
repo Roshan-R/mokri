@@ -1,8 +1,9 @@
 <div class="flex gap-6">
-    <input type="text" name="path" id="path" placeholder="/example" class="p-2 rounded-md" value={{or .Path}} />
+    <input type="text" name="path" id="path" placeholder="/example" class="p-2 rounded-md" value={{or .Path}}
+        required />
     <input type="number" id="status" name="status" placeholder="status" min="100" max="599" value={{or
-        .Response.Status}} class="p-2 w-32 rounded-md" />
-    <select name="method" id="method" class="p-2">
+        .Response.Status}} class="p-2 w-32 rounded-md" required />
+    <select name="method" id="method" class="p-2" required>
         <option value="GET" {{if eq .Method "GET" }} selected {{end}}>GET</option>
         <option value="POST" {{if eq .Method "POST" }} selected {{end}}>POST</option>
         <option value="PUT" {{if eq .Method "PUT" }} selected {{end}}>PUT</option>
@@ -10,4 +11,4 @@
     <button type="submit" class="p-2 rounded-md bg-green-200" name="action" value="submit">Submit</button>
     <button type="submit" class="p-2 rounded-md bg-red-200" name="action" value="delete">Delete</button>
 </div>
-<textarea placeholder="Body" name="body" id="body" class="p-2">{{or .Response.Body}}</textarea>
+<textarea placeholder="Body" name="body" id="body" class="p-2" required>{{or .Response.Body}}</textarea>
