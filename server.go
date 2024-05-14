@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -117,6 +118,12 @@ func main() {
 	mux.HandleFunc("/config", handleConfigHome(cs))
 	mux.HandleFunc("/getFromPath", handleGetRoute(cs))
 	mux.HandleFunc("/updateItem", handleUpdateRoute(cs))
+
+	configServerUrl := "http://localhost:8081/config"
+	mockServerUrl := "http://localhost:8080"
+
+	fmt.Println("Config server :", configServerUrl)
+	fmt.Println("Mock server URL:", mockServerUrl)
 
 	s := &http.Server{
 		Addr:           ":8080",
